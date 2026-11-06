@@ -1424,10 +1424,12 @@ void VCMatrix::updateFeedback()
             else // if (control->widgetType() == VCMatrixControl::Button)
             {
                 QPushButton* button = reinterpret_cast<QPushButton*>(it.key());
-                sendFeedback(button->isDown() ?
-                                 control->m_inputSource->feedbackValue(QLCInputFeedback::UpperValue) :
-                                 control->m_inputSource->feedbackValue(QLCInputFeedback::LowerValue),
-                                 control->m_inputSource);
+                QLCInputFeedback::FeedbackType type = button->isDown() ?
+                                 QLCInputFeedback::UpperValue : QLCInputFeedback::LowerValue;
+                // Send the value together with its own extra params (e.g. MIDI channel)
+                sendFeedback(control->m_inputSource->feedbackValue(type),
+                             control->m_inputSource,
+                             control->m_inputSource->feedbackExtraParams(type));
             }
         }
     }

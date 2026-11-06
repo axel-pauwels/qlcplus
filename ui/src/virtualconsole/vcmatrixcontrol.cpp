@@ -54,6 +54,11 @@ VCMatrixControl &VCMatrixControl::operator=(const VCMatrixControl &vcmc)
 
             m_inputSource->setFeedbackValue(QLCInputFeedback::LowerValue, vcmc.m_inputSource->feedbackValue(QLCInputFeedback::LowerValue));
             m_inputSource->setFeedbackValue(QLCInputFeedback::UpperValue, vcmc.m_inputSource->feedbackValue(QLCInputFeedback::UpperValue));
+
+            // Also copy the feedback extra params (e.g. the MIDI channel used for
+            // LED brightness), otherwise they are lost every time a control is copied
+            m_inputSource->setFeedbackExtraParams(QLCInputFeedback::LowerValue, vcmc.m_inputSource->feedbackExtraParams(QLCInputFeedback::LowerValue));
+            m_inputSource->setFeedbackExtraParams(QLCInputFeedback::UpperValue, vcmc.m_inputSource->feedbackExtraParams(QLCInputFeedback::UpperValue));
         }
     }
 
